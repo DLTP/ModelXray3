@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Matrix X-Ray | Deep Tutorial</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">📡</span>
+            <span class="logo-text">ModelX-Ray</span>
+        </div>
+        
+        <nav class="side-nav">
+            <button id="nav-tut" class="nav-item active" onclick="switchMode('tutorial')">
+                <span class="icon">📖</span> Tutorial
+            </button>
+            <button id="nav-brain" class="nav-item" onclick="switchMode('brain')">
+                <span class="icon">🧠</span> Matrix Brain
+            </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="control-group">
+            <h3>Data Management</h3>
+            <button onclick="saveDatasetToCSV()">💾 Save Data</button>
+            <button onclick="document.getElementById('loadDataInput').click()">📂 Load Data</button>
+            <input type="file" id="loadDataInput" style="display:none" onchange="loadDatasetFromCSV(event)">
+        </div>
+
+        <div class="control-group">
+            <h3>Model Persistence</h3>
+            <button onclick="saveModelToFile()">🤖 Save Model</button>
+            <button onclick="document.getElementById('loadModelInput').click()">🔋 Load Model</button>
+            <input type="file" id="loadModelInput" style="display:none" onchange="loadModelFromFile(event)">
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="app-header">
+            <div class="header-info">
+                <h1>AI Matrix X-Ray</h1>
+                <p>Deconstructing neural networks for professional learning.</p>
+            </div>
+            <div id="global-status" class="status-badge">
+                <span class="status-dot"></span>
+                <span id="status-text">System Ready</span>
+            </div>
+        </header>
+
+        <div id="view-tutorial" class="mode-view">
+            <section class="tutorial-section">
+                <div class="section-header">
+                    <h2>01. Architecture: The High-Res Brain</h2>
+                    <span class="badge">Internal Mechanics</span>
+                </div>
+                <p>Our AI model isn't just a formula; it's a structural network. We use a <strong>64-neuron</strong> input layer followed by a <strong>32-neuron</strong> feature extraction layer. This density allows the model to capture subtle decimal variations in mathematical operations.</p>
+                
+                <div class="grid-layout mt-20">
+                    <div class="concept-card">
+                        <h3>🛠️ Dynamic Resolution</h3>
+                        <p>Why 64 neurons? Higher resolution in the first layer allows the model to map the input space (normalized numbers and operations) into a high-dimensional feature space before calculating the result.</p>
+                    </div>
+                    <div class="concept-card" style="border-left-color: var(--secondary);">
+                        <h3>💡 One-Hot Encoding</h3>
+                        <p>Operations (+, -, *, /) are encoded as distinct binary toggles: <code>[1,0,0,0]</code>. This ensures the model treats categorical data (ops) mathematically without assuming a numerical relationship between them.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tutorial-section">
+                <div class="section-header">
+                    <h2>02. Training: The Feedback Loop</h2>
+                </div>
+                <p class="mb-10 text-muted">Input a sample problem to see how the model "nudges" its internal state.</p>
+                
+                <div class="grid-layout-equal">
+                    <div class="input-panel">
+                        <div class="input-wrapper">
+                            <label>Manual Input (e.g., 5 + 2 = 7)</label>
+                            <input type="text" id="manual-input" value="5 + 2 = 7">
+                        </div>
+                        <button onclick="manualTrain()" class="btn-primary" style="width: 100%;">✨ Execute Training Step</button>
+                        
+                        <div id="manual-training-log" class="console-output mt-20">
+                            Waiting for training command...
+                        </div>
+                    </div>
+                    <div class="explanation-block">
+                        <h3>💡 Normalization Strategy</h3>
+                        <p>Neural networks struggle with large numbers. We normalize inputs to a <code>[0, 1]</code> range:</p>
+                        <div class="math-demo">
+                            <code>Value / Max (20) = Normalized</code>
+                        </div>
+                        <p>This "scaling" keeps gradients stable and learning efficient across different operations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tutorial-section highlighted">
+                <div class="section-header">
+                    <h2>03. Batch Learning & Dataset Generation</h2>
+                </div>
+                <div class="grid-layout">
+                    <div>
+                        <h3>Step 1: Dataset Construction</h3>
+                        <div class="input-wrapper">
+                            <label>Sample Size</label>
+                            <input type="number" id="dataset-size" value="1000">
+                        </div>
+                        <button onclick="generateDataset(document.getElementById('dataset-size').value)" style="width: 100%;">Generate Synthetic Data</button>
+                        <div id="dataset-status" class="status-msg mt-20">Ready for data generation.</div>
+                    </div>
+                    <div>
+                        <h3>Step 2: Optimization Loop</h3>
+                        <div class="input-wrapper">
+                            <label>Epochs (Cycles)</label>
+                            <input type="number" id="train-epoch" value="10">
+                        </div>
+                        <button id="mass-train-btn" onclick="runMassTraining()" style="width: 100%;">Run Batch Training</button>
+                        <div class="mt-20">
+                            <div class="loss-header">
+                                <strong>Training Loss:</strong> <span id="loss-val">0.000</span>
+                            </div>
+                            <div class="loss-meter"><div id="loss-fill" class="loss-fill"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tutorial-section">
+                <div class="section-header">
+                    <h2>04. Prediction & X-Ray Analysis</h2>
+                </div>
+                <div class="grid-layout mt-20">
+                    <div class="prediction-controls">
+                        <div class="calc-ui">
+                            <input type="number" id="p-n1" value="5">
+                            <select id="p-op">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                                <option value="*">*</option>
+                                <option value="/">/</option>
+                            </select>
+                            <input type="number" id="p-n2" value="2">
+                        </div>
+                        <button onclick="runPrediction()" class="btn-accent" style="width: 100%; margin-top: 15px;">🔍 Run X-Ray Prediction</button>
+                        <div class="result-display mt-20">
+                            <span class="label">AI Result:</span>
+                            <span id="pred-res">--</span>
+                        </div>
+                    </div>
+                    <div id="math-breakdown" class="breakdown-container">
+                        <div class="empty-state">Run a prediction to see the matrix deconstruction.</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="view-brain" class="mode-view hidden">
+            <section class="brain-header">
+                <h2>Internal State Visualization</h2>
+                <p id="brain-status-text">Model initialized. Waiting for training steps.</p>
+            </section>
+            <div class="matrix-hud">
+                <div class="matrix-group">
+                    <h3>Layer 1: Feature Extraction</h3>
+                    <div id="w1-view"></div>
+                    <div id="b1-view"></div>
+                </div>
+                <div class="matrix-group">
+                    <h3>Layer 2: Compression</h3>
+                    <div id="w2-view"></div>
+                    <div id="b2-view"></div>
+                </div>
+                <div class="matrix-group">
+                    <h3>Layer 3: Output Projection</h3>
+                    <div id="w3-view"></div>
+                    <div id="b3-view"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
