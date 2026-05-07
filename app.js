@@ -324,9 +324,16 @@ function renderMatrix(id, matrix, label) {
             cell.style.width = '30px'; 
             cell.style.height = '20px';
             cell.innerText = val.toFixed(1);
-            const intensity = Math.min(Math.abs(val) * 100, 100);
-            if (val > 0) cell.style.background = `rgba(155, 109, 255, ${intensity/100})`;
-            else cell.style.background = `rgba(255, 109, 145, ${intensity/100})`;
+            const intensity = Math.min(Math.abs(val) * 150 + 40, 100);
+            if (val > 0) {
+                cell.style.background = `rgba(0, 210, 255, ${intensity/100})`;
+                cell.style.boxShadow = `0 0 8px rgba(0, 210, 255, ${intensity/200})`;
+            } else {
+                cell.style.background = `rgba(255, 0, 85, ${intensity/100})`;
+                cell.style.boxShadow = `0 0 8px rgba(255, 0, 85, ${intensity/200})`;
+            }
+            cell.style.color = intensity > 60 ? '#000' : '#fff';
+            cell.style.fontWeight = '800';
             grid.appendChild(cell);
         });
     });
@@ -534,9 +541,12 @@ function renderMatrixWithImportance(id, matrix, label, importance = null) {
             cell.innerText = val.toFixed(2);
 
             if (importance) {
-                let intensity = importance[c] / maxImp;
-                cell.style.background = `rgba(255, 109, 145, ${intensity})`;
-                cell.style.color = intensity > 0.6 ? 'white' : 'black';
+                let intensityVal = (importance[c] / maxImp) * 100;
+                let intensity = Math.min(intensityVal + 40, 100);
+                cell.style.background = `rgba(255, 0, 85, ${intensity/100})`;
+                cell.style.boxShadow = `0 0 8px rgba(255, 0, 85, ${intensity/200})`;
+                cell.style.color = intensity > 60 ? '#000' : '#fff';
+                cell.style.fontWeight = '800';
             }
 
             grid.appendChild(cell);

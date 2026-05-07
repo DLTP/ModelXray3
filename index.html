@@ -17,7 +17,7 @@
         
         <nav class="side-nav">
             <button id="nav-tut" class="nav-item active" onclick="switchMode('tutorial')">
-                <span class="icon">📖</span> Tutorial
+                <span class="icon">📖</span> AI Basics
             </button>
             <button id="nav-brain" class="nav-item" onclick="switchMode('brain')">
                 <span class="icon">🧠</span> Matrix Brain
@@ -54,6 +54,114 @@
         </header>
 
         <div id="view-tutorial" class="mode-view">
+            <!-- NEW SECTION 1: Intro -->
+            <section class="tutorial-section intro-slide" style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <h1 style="font-size: 4rem; margin-bottom: 20px;">What is AI?</h1>
+                <p style="font-size: 1.5rem; color: var(--text-muted); max-width: 800px;">
+                    Is it magic? Is it a brain in a box? Let's deconstruct it together.
+                </p>
+            </section>
+
+            <!-- NEW SECTION 2: Math Concept -->
+            <section class="tutorial-section math-intro-slide" style="text-align: center;">
+                <div class="section-header" style="justify-content: center;">
+                    <h2>AI is Just Matrices and Math</h2>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted);">
+                    At its core, an AI is nothing but a set of Weight Matrices and Bias Vectors, usually at least 3 layers deep.
+                </p>
+                
+                <div style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-family: monospace; font-size: 1.2rem; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                            Input Layer<br>
+                            [n1, n2, op1, op2, op3, op4]<br>
+                            (1x6)
+                        </div>
+                        <h4 style="margin-top: 15px; color: var(--primary);">Input (1x6)</h4>
+                    </div>
+                    
+                    <div style="font-size: 2rem; color: var(--text-muted);">×</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="font-family: monospace; font-size: 0.8rem; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                            Weights Layer 1<br>
+                            [w11 w12 ... w164]<br>
+                            [w21 w22 ... w264]<br>
+                            ...<br>
+                            [w61 w62 ... w664]<br>
+                            (6x64)
+                        </div>
+                        <h4 style="margin-top: 15px; color: var(--secondary);">First Layer Weights (6x64)</h4>
+                    </div>
+                    
+                    <div style="font-size: 2rem; color: var(--text-muted);">+</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="font-family: monospace; font-size: 0.8rem; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                            Bias Layer 1<br>
+                            [b1]<br>
+                            [b2]<br>
+                            ...<br>
+                            [b64]<br>
+                            (64x1)
+                        </div>
+                        <h4 style="margin-top: 15px; color: var(--accent);">First Layer Bias (64x1)</h4>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; margin-top: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-family: monospace; font-size: 0.8rem; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                            Hidden Layer 2<br>
+                            Weights (64x32)<br>
+                            + Bias (32x1)
+                        </div>
+                        <h4 style="margin-top: 15px; color: var(--secondary);">Second Layer</h4>
+                    </div>
+                    
+                    <div style="font-size: 2rem; color: var(--text-muted);">→</div>
+                    
+                    <div style="text-align: center;">
+                        <div style="font-family: monospace; font-size: 0.8rem; background: var(--bg-card); padding: 10px; border-radius: 8px; border: 1px solid var(--border);">
+                            Output Layer<br>
+                            Weights (32x1)<br>
+                            + Bias (1x1)
+                        </div>
+                        <h4 style="margin-top: 15px; color: var(--primary);">Output</h4>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW SECTION 3: Problem Statement -->
+            <section class="tutorial-section problem-statement-slide">
+                <div class="section-header">
+                    <h2>Problem Statement</h2>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                    <strong>Let's make an AI model for a simple calculator which can do 4 basic operations (+, -, *, /).</strong>
+                </p>
+                <div style="background: var(--bg-card); padding: 15px; border-radius: 8px; font-family: monospace; color: #00ff88; margin-bottom: 20px; border: 1px solid var(--border);">
+                    // Raw Data Example:<br>
+                    Input: [5, 2, '+'] &rarr; Target: [7]<br>
+                    Input: [10, 5, '/'] &rarr; Target: [2]<br>
+                    Input: [3, 4, '*'] &rarr; Target: [12]<br>
+                    Input: [8, 3, '-'] &rarr; Target: [5]
+                </div>
+                <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                    We are selecting the following matrix sizes for our neural network: Input layer (1x6), First weights (6x64), First bias (64x1), Second weights (64x32), Second bias (32x1), Third weights (32x1), Third bias (1x1).
+                </p>
+                <div class="concept-card" style="border-left-color: var(--primary);">
+                    <h3>🧠 Why 64-width Matrices and 3 Layers?</h3>
+                    <p>
+                        We are choosing a <strong>64-width matrix</strong> (64 neurons) for the first layer because higher resolution allows the model to map the input space—which consists of mixed data types (numbers and encoded operations)—into a highly detailed mathematical representation. 
+                        <br><br>
+                        We use <strong>3 layers</strong> because it takes depth to learn complex logic: 
+                        Layer 1 extracts the features (identifying the operation), Layer 2 compresses and processes the logic (performing the math), and Layer 3 projects the final answer.
+                    </p>
+                </div>
+            </section>
+
             <section class="tutorial-section">
                 <div class="section-header">
                     <h2>01. Architecture: The High-Res Brain</h2>
